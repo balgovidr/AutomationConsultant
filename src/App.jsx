@@ -38,6 +38,10 @@ function App() {
         <span>A hazard management tool that seamlessly integrates with industry-standard software like ArcGIS and Revit, providing a centralised hub for risk tracking and collaboration.</span>
         <span>By mapping hazards directly onto drawings or 3D models, teams can easily identify, assess, and mitigate potential risks throughout the project lifecycle.</span>
         <span>This intuitive tool eliminates the inefficiencies of manual tracking methods, ensuring enhanced safety and efficiency on construction sites.</span>
+        <div className='flex-1 flex flex-row'>
+          <img src='assets/Hazard - map.jpg' className='w-2/3 object-contain left-0 absolute mix-blend-darken'/>
+          <img src='assets/Hazard - model.jpg' className='w-1/2 object-contain absolute right-0 place-self-end mix-blend-darken'/>
+        </div>
       </div>
        
       <div className='flex min-h-screen flex-col p-8 bg-primary text-white gap-4'>
