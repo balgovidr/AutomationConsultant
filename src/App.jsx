@@ -3,7 +3,7 @@ import './App.css'
 function App() {
 
   return (
-    <div className='flex flex-col w-full font-secondary'>
+    <div className='flex flex-col w-full font-secondary bg-white'>
       <div className='flex flex-row w-full h-screen overflow-hidden'>
         <div className='flex flex-col p-4 w-4/5 items-start justify-end py-28'>
           <span className='text-5xl font-bold uppercase font-sans mb-8 bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text'>Automation Consultant</span>
