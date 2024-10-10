@@ -8,7 +8,7 @@ function App() {
         <div className='flex flex-col p-4 w-4/5 items-start justify-end py-28'>
           <span className='text-5xl font-bold uppercase font-sans mb-8 bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text'>Automation Consultant</span>
           <span className='bg-primary text-white uppercase text-md px-1 mb-3'>I&apos;m Bal Ranjith</span>
-          <span>Structural engineer turned software developer. I help construction firms streamline processes with tech solutions.</span>
+          <span className='text-primary' >Structural engineer turned software developer. I help construction firms streamline processes with tech solutions.</span>
         </div>
       </div>
 
