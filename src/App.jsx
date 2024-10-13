@@ -39,8 +39,8 @@ function App() {
         <span>By mapping hazards directly onto drawings or 3D models, teams can easily identify, assess, and mitigate potential risks throughout the project lifecycle.</span>
         <span>This intuitive tool eliminates the inefficiencies of manual tracking methods, ensuring enhanced safety and efficiency on construction sites.</span>
         <div className='flex-1 flex flex-row'>
-          <img src='assets/Hazard - map.jpg' className='w-2/3 object-contain left-0 absolute mix-blend-darken'/>
-          <img src='assets/Hazard - model.jpg' className='w-1/2 object-contain absolute right-0 place-self-end mix-blend-darken'/>
+          <img src='assets/Hazard - map.jpg' className='w-2/3 object-contain mix-blend-darken'/>
+          <img src='assets/Hazard - model.jpg' className='w-1/2 object-contain place-self-end mix-blend-darken -ml-12'/>
         </div>
       </div>
        
@@ -50,6 +50,7 @@ function App() {
         <span>This tool automates the verification of essential details like revision numbers and statuses, eliminating the time-consuming manual checks.</span>
         <span>By leveraging machine learning, it accurately identifies and flags errors, saving countless hours and reducing project delays.</span>
         <span>This solution empowers engineering teams and document controllers to focus on high-value tasks, improving efficiency and reducing costs throughout the project lifecycle.</span>
+        <img src="assets/drawing_checker.svg" alt="Drawing checker" />
       </div>
 
       <div className='flex min-h-screen flex-col p-8 text-primary gap-4'>
@@ -58,6 +59,7 @@ function App() {
         <span>By leveraging Autodesk Construction Cloud, this solution automates data collection, storage, and process execution.</span>
         <span>This empowers teams to focus on high-value tasks while streamlining operations.</span>
         <span>The user-friendly interface and seamless integration with ACC ensure a smooth transition to digital workflows, enhancing efficiency and productivity throughout the project lifecycle.</span>
+        <img src="assets/digitising_forms.svg" alt="Digitising forms" />
       </div>
 
       <div className='flex min-h-screen flex-col p-8 bg-primary text-white gap-4'>
@@ -65,11 +67,12 @@ function App() {
         <span>A streamlined workflow where data transfer and formatting are automated.</span>
         <span>This solution, developed using VBA and Python, streamlines data collection, formatting, and distribution.</span>
         <span>By automating these routine tasks, you can free up your team&apos;s time for more strategic and value-added activities, improving efficiency and productivity.</span>
+        <img src="assets/formatting.svg" alt="Formatting raw output of data to useful insights" className='brightness-0 invert mt-16' />
       </div>
 
       <div className='flex flex-col bg-secondary py-14 px-5 gap-10'>
         <span className='text-3xl text-white uppercase text-center'>What I use</span>
-        <div className='flex flex-row flex-wrap gap-2'>
+        <div className='flex flex-row flex-wrap min-gap-2 justify-evenly'>
           <a href="https://reactjs.org/" target="_blank" rel="noopener noreferrer">
             <img src="assets/react.svg" alt="React" className="brightness-0 invert h-12" />
           </a>
