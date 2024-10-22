@@ -4,9 +4,12 @@ function App() {
 
   return (
     <div className='flex flex-col w-full font-secondary bg-white'>
-      <div className='flex flex-row w-full h-screen overflow-hidden'>
-        <div className='flex flex-col p-4 w-4/5 items-start justify-end py-28'>
-          <span className='text-5xl font-bold uppercase font-sans mb-8 bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text'>Automation Consultant</span>
+      <div className='flex flex-col w-full h-screen overflow-hidden'>
+        <div className="h-screen w-full flex opacity-20 md:opacity-100 md:order-1 md:blur-0 content-center absolute top-0 left-0">
+          <img src='assets/phone_background.webp' className="self-center object-contain brightness-10" />
+        </div>
+        <div className="flex flex-col p-4 items-start justify-end py-28 backdrop-blur-sm absolute bottom-0 left-0 h-screen bg-[url('assets/phone_background.webp')] bg-cover bg-clip-text text-transparent">
+          <span className='text-5xl font-bold uppercase font-sans mb-8'>Automation Consultant</span>
           <span className='bg-primary text-white uppercase text-md px-1 mb-3'>I&apos;m Bal Ranjith</span>
           <span className='text-primary' >Structural engineer turned software developer. I help construction firms streamline processes with tech solutions.</span>
         </div>
@@ -50,7 +53,7 @@ function App() {
         <span>This tool automates the verification of essential details like revision numbers and statuses, eliminating the time-consuming manual checks.</span>
         <span>By leveraging machine learning, it accurately identifies and flags errors, saving countless hours and reducing project delays.</span>
         <span>This solution empowers engineering teams and document controllers to focus on high-value tasks, improving efficiency and reducing costs throughout the project lifecycle.</span>
-        <img src="assets/drawing_checker.svg" alt="Drawing checker" />
+        <img src="assets/drawing_checker.svg" alt="Drawing checker" className='brightness-0 invert' />
       </div>
 
       <div className='flex min-h-screen flex-col p-8 text-primary gap-4'>
