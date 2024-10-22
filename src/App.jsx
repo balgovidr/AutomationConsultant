@@ -4,7 +4,7 @@ function App() {
 
   return (
     <div className='flex flex-col w-full font-secondary bg-white'>
-      <div className='flex flex-col w-full max-h-screen overflow-hidden'>
+      <div className='flex flex-col w-full h-screen overflow-hidden'>
         <div className="h-screen w-full flex opacity-20 md:opacity-100 md:order-1 md:blur-0 content-center absolute top-0 left-0">
           <img src='assets/phone_background.webp' className="self-center object-contain brightness-10" />
         </div>
