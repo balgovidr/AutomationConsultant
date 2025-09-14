@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { supabase } from "@/utils/supabaseClient.js";
-import { useAuth } from "@/components/AuthProvider.jsx";
+import { useAuth } from "@/providers/AuthProvider.jsx";
 import Button from "@/components/Button.jsx";
 import Input from "@/components/Input.jsx";
 import MailIcon from '@mui/icons-material/Mail';
