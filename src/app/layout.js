@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from '@/components/AuthProvider.jsx';
+import { AuthProvider } from '@/providers/AuthProvider.jsx';
+import NavBar from "@/components/NavBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Reci - Automation hub",
-  description: "Hub to execute and manage automations",
+  title: "Construct Digitally - Automated design & build solutions",
+  description: "Hub to execute and manage automated design & build solutions for construction and design projects.",
 };
 
 export default function RootLayout({ children }) {
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthProvider>
+          <NavBar />
           {children}
         </AuthProvider>
       </body>
