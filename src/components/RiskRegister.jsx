@@ -247,16 +247,16 @@ export default function RiskRegister () {
 								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-12">
 									ID
 								</th>
-								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-36">
+								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-48">
 									Risk Title
 								</th>
-								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-48">
+								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-64">
 									Risk Description
 								</th>
-								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-28">
+								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-32">
 									Likelihood
 								</th>
-								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-28">
+								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-32">
 									Consequence
 								</th>
 								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">
@@ -265,17 +265,17 @@ export default function RiskRegister () {
 								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">
 									Mitigate By
 								</th>
-								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">
+								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-38">
 									Owner
 								</th>
-								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-48">
+								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-64">
 									Mitigation
 								</th>
-								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-28">
-									Mit. Likelihood
+								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-32">
+									Mitigated Likelihood
 								</th>
-								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-28">
-									Mit. Consequence
+								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-32">
+									Mitigated Consequence
 								</th>
 								<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">
 									Mit. Rating
@@ -284,7 +284,7 @@ export default function RiskRegister () {
 						</thead>
 						<tbody className="bg-white divide-y divide-gray-200">
 							{risks.map((risk, index) => (
-							<tr key={risk.id} className="hover:bg-gray-50 h-12">
+							<tr key={risk.id} className="hover:bg-gray-50">
 								{/* ID */}
 								<td className="px-2 py-1 whitespace-nowrap text-xs font-medium text-gray-900">
 								{risk.id}
@@ -292,23 +292,23 @@ export default function RiskRegister () {
 								
 								{/* Risk Title */}
 								<td className="px-2 py-1">
-								<input
+								<textarea
 									type="text"
 									value={risk.title}
 									onChange={(e) => handleInputChange(index, 'title', e.target.value)}
 									placeholder="Enter risk title..."
-									className="w-full h-10 px-2 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+									className="w-full min-h-10 px-2 border border-gray-300 align-middle resize-none field-sizing-content overflow-hidden text-wrap rounded text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
 								/>
 								</td>
 								
 								{/* Risk Description */}
 								<td className="px-2 py-1">
-								<input
+								<textarea
 									type="text"
 									value={risk.description}
 									onChange={(e) => handleInputChange(index, 'description', e.target.value)}
 									placeholder="Describe the risk..."
-									className="w-full h-10 px-2 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+									className="w-full min-h-10 px-2 border border-gray-300 rounded align-middle text-xs resize-none field-sizing-content overflow-hidden text-wrap focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
 								/>
 								</td>
 								
@@ -361,23 +361,23 @@ export default function RiskRegister () {
 
 								{/* Owner */}
 								<td className="px-2 py-1">
-								<input
+								<textarea
 									type="text"
 									value={risk.owner}
 									onChange={(e) => handleInputChange(index, 'owner', e.target.value)}
 									placeholder="Owner name..."
-									className="w-full h-10 px-2 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+									className="w-full h-10 px-2 border border-gray-300 align-middle resize-none field-sizing-content overflow-hidden text-wrap rounded text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
 								/>
 								</td>
 
 								{/* Mitigation */}
 								<td className="px-2 py-1">
-								<input
+								<textarea
 									type="text"
 									value={risk.mitigation}
 									onChange={(e) => handleInputChange(index, 'mitigation', e.target.value)}
 									placeholder="Mitigation strategy..."
-									className="w-full h-10 px-2 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+									className="w-full h-10 px-2 border border-gray-300 align-middle resize-none field-sizing-content overflow-hidden text-wrap rounded text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
 								/>
 								</td>
 								
