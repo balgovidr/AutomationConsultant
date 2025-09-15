@@ -19,14 +19,6 @@ export async function POST(request) {
     return NextResponse.json({ error: error.message }, { status: 401 })
   }
 
-  // Only allow users with a reciengineering.com email or balgovidr@hotmail.com to log in
-  if (!data.user.email.endsWith('@reciengineering.com') && data.user.email !== 'balgovidr@hotmail.com') {
-    // Log out the user if the email domain is not allowed
-    await supabase.auth.signOut()
-
-    return NextResponse.json({ error: "Access restricted to reciengineering.com emails only." }, { status: 403 })
-  }
-
   // Supabase sets the cookies automatically
   return NextResponse.json({ success: true })
 }

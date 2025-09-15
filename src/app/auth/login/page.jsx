@@ -10,6 +10,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import SlideAlert from "@/components/SlideAlert.jsx";
 import { useRouter } from 'next/navigation'
 import { CircularProgress } from "@mui/material";
+import { red } from "@mui/material/colors";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -19,10 +20,12 @@ export default function LoginPage() {
   const { session } = useAuth();
 
   const router = useRouter()
+  const redirectUrl = (new URLSearchParams(window.location.search)).get("redirect")
+  const redirectParam = redirectUrl ? "?redirect=" + encodeURIComponent(redirectUrl) : "";
 
   // Redirect only when session exists
   if (session) {
-    window.location.href = "/dashboard";
+    window.location.href = redirectUrl;
     return null;
   }
 
@@ -109,7 +112,7 @@ export default function LoginPage() {
 
       <div className="mt-6 text-center space-y-2">
         <Button
-          onClick={() => router.push("/auth/forgot-password")}
+          onClick={() => router.push("/auth/forgot-password" + redirectParam)}
           variant="text"
         >
           Forgot your password?
@@ -117,7 +120,7 @@ export default function LoginPage() {
         <div className="text-sm text-gray-600">
           Don't have an account?{' '}
           <Button
-            onClick={() => router.push("/auth/signup")}
+            onClick={() => router.push("/auth/signup" + redirectParam)}
             variant="text"
             className="p-0 font-medium"
           >

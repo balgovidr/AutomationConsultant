@@ -30,15 +30,17 @@ export default function NavBar() {
     }, [isMenuOpen]);
 
 	function AuthButtons({size = "md", className}) {
+		const redirect = "?redirect=" + encodeURIComponent(window.location.href);
+
 		if (session) {
 			return <Button variant="outline" size={size} onClick={() => router.push('/auth/logout')} className={className}>Logout</Button>
 		} else {
 			return (
 				<div className={'flex-row gap-2 items-center ' + className}>
-					<Button variant="secondary" size={size} onClick={() => router.push('/auth/signup')}>
+					<Button variant="secondary" size={size} onClick={() => router.push('/auth/signup' + redirect)}>
 						Sign up
 					</Button>
-					<Button variant="primary" size={size} onClick={() => router.push('/auth/login')}>
+					<Button variant="primary" size={size} onClick={() => router.push('/auth/login' + redirect)}>
 						Login
 					</Button>					
 				</div>

@@ -18,6 +18,8 @@ export default function ForgotPasswordPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const router = useRouter();
+  const redirectUrl = (new URLSearchParams(window.location.search)).get("redirect")
+  const redirectParam = redirectUrl ? "?redirect=" + encodeURIComponent(redirectUrl) : "";
 
   const handleReset = async (e) => {
     e.preventDefault();
@@ -25,7 +27,7 @@ export default function ForgotPasswordPage() {
     setAlert({message: "", severity: ""});
 
     const response = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/update-password`,
+      redirectTo: `${window.location.origin}/auth/update-password` + redirectParam,
     });
 
     setLoading(false);
@@ -52,7 +54,7 @@ export default function ForgotPasswordPage() {
         </p>
         <Button
           variant="outline"
-          onClick={() => router.push("/auth/login")}
+          onClick={() => router.push("/auth/login" + redirectParam)}
           className="w-full"
         >
           Back to Sign In
@@ -103,7 +105,7 @@ export default function ForgotPasswordPage() {
       <div className="mt-6 text-center">
         <Button
           variant="text"
-          onClick={() => router.push("/auth/login")}
+          onClick={() => router.push("/auth/login" + redirectParam)}
         >
           Back to Sign In
         </Button>

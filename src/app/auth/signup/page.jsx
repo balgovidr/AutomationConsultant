@@ -18,17 +18,13 @@ export default function SignUpPage() {
   const router = useRouter();
   const [alert, setAlert] = useState({message: "", severity: ""});
 
+  const redirectUrl = (new URLSearchParams(window.location.search)).get("redirect")
+  const redirectParam = redirectUrl ? "?redirect=" + encodeURIComponent(redirectUrl) : "";
+
   const handleSignUp = async (e) => {
     e.preventDefault();
     setLoading(true);
     setAlert({message: "", severity: ""});
-
-    // Check that the email provided is valid
-    if (!email.toLowerCase().includes("reciengineering.com")) {
-      setLoading(false);
-      setAlert({message: "Please use a valid Reci Engineering email address.", severity: "error"});
-      return;
-    }
 
     const response = await supabase.auth.signUp({
       email,
@@ -42,7 +38,7 @@ export default function SignUpPage() {
     } else {
       // Show user a success message and redirect
       setAlert({message: "Sign up successful! Redirecting to login...", severity: "success"});
-      setTimeout(() => router.push("/auth/login"), 2000);
+      setTimeout(() => router.push("/auth/login" + redirectParam), 2000);
     }
   };
 
@@ -101,7 +97,7 @@ export default function SignUpPage() {
           <Button
             variant="text"
             className="p-0 font-medium"
-            onClick={() => router.push("/auth/login")}
+            onClick={() => router.push("/auth/login" + redirectParam)}
           >
             Sign in
           </Button>

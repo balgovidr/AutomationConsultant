@@ -14,6 +14,9 @@ export default function UpdatePasswordPage() {
   const [alert, setAlert] = useState({message: "", severity: ""});
   const router = useRouter();
 
+  const redirectUrl = (new URLSearchParams(window.location.search)).get("redirect")
+  const redirectParam = redirectUrl ? "?redirect=" + encodeURIComponent(redirectUrl) : "";
+
   const handleUpdate = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -30,7 +33,7 @@ export default function UpdatePasswordPage() {
     } else {
       // Show user a success message and redirect
       setAlert({message: "Password updated successfully!", severity: "success"});
-      setTimeout(() => router.push("/auth/login"), 2000);
+      setTimeout(() => router.push("/auth/login" + redirectParam), 2000);
     }
   };
 
