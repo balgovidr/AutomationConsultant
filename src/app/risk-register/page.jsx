@@ -4,6 +4,8 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 import React, { useState } from 'react';
 import SlideAlert from '@/components/SlideAlert';
 import { emptyRiskRow } from '@/constants/riskRegister';
+import Instructions from '@/components/risk-register/Instructions';
+import RiskMatrix from '@/components/risk-register/RiskMatrix';
 
 export default function RiskRegister () {
     // Initialize with 10 empty rows
@@ -81,129 +83,10 @@ export default function RiskRegister () {
 
                 <div className='flex flex-col xl:flex-row gap-4'>
                     {/* Instructions */}
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 flex-grow">
-                        <h2 className="text-lg font-semibold text-blue-900 mb-3">How to Use This Risk Register</h2>
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <h3 className="font-medium text-blue-800 mb-2">1. Risk Assessment</h3>
-                                <ul className="text-sm text-blue-700 space-y-1 mb-4">
-                                    <li>• Enter a clear <strong>Risk Title</strong> and detailed <strong>Description</strong></li>
-                                    <li>• Rate <strong>Likelihood</strong> (1-5): How probable is this risk?</li>
-                                    <li>• Rate <strong>Consequence</strong> (1-5): How severe would the impact be?</li>
-                                    <li>• <strong>Risk Rating</strong> auto-calculates (Likelihood × Consequence)</li>
-                                </ul>
-                                
-                                <h3 className="font-medium text-blue-800 mb-2">2. Risk Management</h3>
-                                <ul className="text-sm text-blue-700 space-y-1">
-                                    <li>• Set <strong>Mitigate By</strong> date for target completion</li>
-                                    <li>• Assign an <strong>Owner</strong> responsible for the risk</li>
-                                    <li>• Define <strong>Mitigation</strong> strategy or action plan</li>
-                                </ul>
-                            </div>
-                            
-                            <div>
-                                <h3 className="font-medium text-blue-800 mb-2">3. Post-Mitigation Assessment</h3>
-                                <ul className="text-sm text-blue-700 space-y-1 mb-4">
-                                    <li>• By default, mitigated values match original risk scores</li>
-                                    <li>• Once mitigation is defined, adjust <strong>Mitigated Likelihood</strong> and <strong>Consequence</strong></li>
-                                    <li>• <strong>Mitigated Rating</strong> shows residual risk after mitigation</li>
-                                </ul>
-                                
-                                <h3 className="font-medium text-blue-800 mb-2">4. Color Coding</h3>
-                                <ul className="text-sm text-blue-700 space-y-1">
-                                    <li>• Likelihood and Consequence fields are color-coded by severity</li>
-                                    <li>• Risk ratings uses the Risk Assessment Matrix below for priority assessment</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <Instructions />
 
                     {/* Risk Matrix */}
-                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-                        <h2 className="text-lg font-semibold text-gray-900 mb-4">Risk Assessment Matrix</h2>
-                        <div className="flex flex-col md:flex-row xl:flex-col gap-4">
-                            <div className="overflow-x-auto">
-                                <table className="text-xs border-collapse">
-                                    <thead>
-                                        <tr>
-                                            <th className="border border-gray-300 p-2 bg-gray-100 font-medium">Risk Rating</th>
-                                            <th className="border border-gray-300 p-2 bg-gray-100 font-medium text-center" colSpan="5">
-                                            Consequence Level
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th className="border border-gray-300 p-2 bg-gray-100 font-medium">Likelihood</th>
-                                            <th className="border border-gray-300 p-2 bg-green-100 text-green-800 font-medium">1 - Negligible</th>
-                                            <th className="border border-gray-300 p-2 bg-green-200 text-green-900 font-medium">2 - Minor</th>
-                                            <th className="border border-gray-300 p-2 bg-yellow-100 text-yellow-800 font-medium">3 - Moderate</th>
-                                            <th className="border border-gray-300 p-2 bg-orange-100 text-orange-800 font-medium">4 - Major</th>
-                                            <th className="border border-gray-300 p-2 bg-red-100 text-red-800 font-medium">5 - Severe</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td className="border border-gray-300 p-2 bg-red-100 text-red-800 font-medium">5 - Very High</td>
-                                            <td className="border border-gray-300 p-2 bg-yellow-100 text-yellow-800 text-center font-bold">5</td>
-                                            <td className="border border-gray-300 p-2 bg-orange-100 text-orange-800 text-center font-bold">10</td>
-                                            <td className="border border-gray-300 p-2 bg-orange-100 text-orange-800 text-center font-bold">15</td>
-                                            <td className="border border-gray-300 p-2 bg-red-100 text-red-800 text-center font-bold">20</td>
-                                            <td className="border border-gray-300 p-2 bg-red-100 text-red-800 text-center font-bold">25</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="border border-gray-300 p-2 bg-orange-100 text-orange-800 font-medium">4 - High</td>
-                                            <td className="border border-gray-300 p-2 bg-green-100 text-green-800 text-center font-bold">4</td>
-                                            <td className="border border-gray-300 p-2 bg-yellow-100 text-yellow-800 text-center font-bold">8</td>
-                                            <td className="border border-gray-300 p-2 bg-orange-100 text-orange-800 text-center font-bold">12</td>
-                                            <td className="border border-gray-300 p-2 bg-orange-100 text-orange-800 text-center font-bold">16</td>
-                                            <td className="border border-gray-300 p-2 bg-red-100 text-red-800 text-center font-bold">20</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="border border-gray-300 p-2 bg-yellow-100 text-yellow-800 font-medium">3 - Medium</td>
-                                            <td className="border border-gray-300 p-2 bg-green-100 text-green-800 text-center font-bold">3</td>
-                                            <td className="border border-gray-300 p-2 bg-green-100 text-green-800 text-center font-bold">6</td>
-                                            <td className="border border-gray-300 p-2 bg-yellow-100 text-yellow-800 text-center font-bold">9</td>
-                                            <td className="border border-gray-300 p-2 bg-orange-100 text-orange-800 text-center font-bold">12</td>
-                                            <td className="border border-gray-300 p-2 bg-orange-100 text-orange-800 text-center font-bold">15</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="border border-gray-300 p-2 bg-green-200 text-green-900 font-medium">2 - Low</td>
-                                            <td className="border border-gray-300 p-2 bg-green-100 text-green-800 text-center font-bold">2</td>
-                                            <td className="border border-gray-300 p-2 bg-green-100 text-green-800 text-center font-bold">4</td>
-                                            <td className="border border-gray-300 p-2 bg-green-100 text-green-800 text-center font-bold">6</td>
-                                            <td className="border border-gray-300 p-2 bg-yellow-100 text-yellow-800 text-center font-bold">8</td>
-                                            <td className="border border-gray-300 p-2 bg-orange-100 text-orange-800 text-center font-bold">10</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="border border-gray-300 p-2 bg-green-100 text-green-800 font-medium">1 - Very Low</td>
-                                            <td className="border border-gray-300 p-2 bg-green-100 text-green-800 text-center font-bold">1</td>
-                                            <td className="border border-gray-300 p-2 bg-green-100 text-green-800 text-center font-bold">2</td>
-                                            <td className="border border-gray-300 p-2 bg-green-100 text-green-800 text-center font-bold">3</td>
-                                            <td className="border border-gray-300 p-2 bg-green-100 text-green-800 text-center font-bold">4</td>
-                                            <td className="border border-gray-300 p-2 bg-yellow-100 text-yellow-800 text-center font-bold">5</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 md:content-start gap-4 text-xs">
-                                <div className="flex items-center">
-                                    <div className="w-4 h-4 bg-green-100 border border-gray-300 mr-2"></div>
-                                    <span><strong>Low Risk (1-4):</strong> Acceptable, monitor</span>
-                                </div>
-                                <div className="flex items-center">
-                                    <div className="w-4 h-4 bg-yellow-100 border border-gray-300 mr-2"></div>
-                                    <span><strong>Medium Risk (5-9):</strong> Requires attention</span>
-                                </div>
-                                <div className="flex items-center">
-                                    <div className="w-4 h-4 bg-orange-100 border border-gray-300 mr-2"></div>
-                                    <span><strong>High Risk (10-16):</strong> Priority mitigation</span>
-                                </div>
-                                <div className="flex items-center">
-                                    <div className="w-4 h-4 bg-red-100 border border-gray-300 mr-2"></div>
-                                    <span><strong>Critical Risk (17+):</strong> Immediate action required</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <RiskMatrix />
                 </div>
             </div>
 
