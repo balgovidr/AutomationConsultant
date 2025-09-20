@@ -5,7 +5,7 @@ import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import DescriptionIcon from '@mui/icons-material/Description';
 import ArchitectureIcon from '@mui/icons-material/Architecture';
-import LayersIcon from '@mui/icons-material/Layers';
+import LayersIcon from '@mui/icons-material/LayersOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import PlaceIcon from '@mui/icons-material/Place';
@@ -14,10 +14,13 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import PersonIcon from '@mui/icons-material/Person';
-import MapIcon from '@mui/icons-material/Map';
+import PersonIcon from '@mui/icons-material/PersonOutlined';
 import "leaflet/dist/leaflet.css";
 import MapView from '@/components/geospatial/MapView';
+import PublicIcon from '@mui/icons-material/PublicOutlined';
+import BusinessIcon from '@mui/icons-material/BusinessOutlined';
+import Button from '@/components/Button';
+import AddIcon from '@mui/icons-material/AddOutlined';
 
 export default function GISPlatformLayout() {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -30,7 +33,7 @@ export default function GISPlatformLayout() {
     // Projects
     {
       id: 'p1',
-      category: 'project',
+      category: 'all',
       name: "Bridge Foundation Study",
       location: "Downtown Bridge Site",
       date: "2024-03-15",
@@ -43,7 +46,7 @@ export default function GISPlatformLayout() {
     },
     {
       id: 'p2',
-      category: 'project',
+      category: 'all',
       name: "High-Rise Building Analysis",
       location: "Commercial District",
       date: "2024-01-20",
@@ -57,7 +60,7 @@ export default function GISPlatformLayout() {
     // Documents
     {
       id: 'd1',
-      category: 'document',
+      category: 'all',
       name: "Soil Analysis Report",
       location: "Downtown Bridge Site",
       date: "2024-03-15",
@@ -70,7 +73,7 @@ export default function GISPlatformLayout() {
     },
     {
       id: 'd2',
-      category: 'document',
+      category: 'all',
       name: "Environmental Impact Assessment",
       location: "Commercial District", 
       date: "2024-02-10",
@@ -84,7 +87,7 @@ export default function GISPlatformLayout() {
     // Drawings
     {
       id: 'dr1',
-      category: 'drawing',
+      category: 'all',
       name: "Site Survey Plan",
       location: "Downtown Bridge Site",
       date: "2024-03-10",
@@ -98,7 +101,7 @@ export default function GISPlatformLayout() {
     },
     {
       id: 'dr2',
-      category: 'drawing',
+      category: 'all',
       name: "Foundation Details",
       location: "Commercial District",
       date: "2024-02-15",
@@ -113,7 +116,7 @@ export default function GISPlatformLayout() {
     // Boreholes
     {
       id: 'b1',
-      category: 'borehole',
+      category: 'all',
       name: "BH-001",
       location: "Downtown Bridge Site",
       date: "2024-03-12",
@@ -125,7 +128,7 @@ export default function GISPlatformLayout() {
     },
     {
       id: 'b2',
-      category: 'borehole',
+      category: 'all',
       name: "BH-002", 
       location: "Downtown Bridge Site",
       date: "2024-03-13",
@@ -137,13 +140,12 @@ export default function GISPlatformLayout() {
     }
   ];
 
-  const categories = [
-    { id: 'all', label: 'All Items', icon: FolderOpenIcon, color: 'gray' },
-    { id: 'project', label: 'Projects', icon: ApartmentIcon, color: 'blue' },
-    { id: 'document', label: 'Documents', icon: DescriptionIcon, color: 'green' },
-    { id: 'drawing', label: 'Drawings', icon: ArchitectureIcon, color: 'purple' },
-    { id: 'borehole', label: 'Boreholes', icon: LayersIcon, color: 'orange' }
-  ];
+  const availabilityCategories = {
+    all: { label: 'All', icon: LayersIcon },
+    public: { label: 'Public', icon: PublicIcon },
+    organisation: { label: 'Organisation', icon: BusinessIcon },
+    personal: { label: 'Personal', icon: PersonIcon }
+  };
 
   const filteredItems = selectedCategory === 'all' 
     ? allItems 
@@ -193,19 +195,22 @@ export default function GISPlatformLayout() {
             />
           </div>
           <div className="flex items-center justify-between mt-3">
-            <button 
+            {/* <button 
               onClick={() => setShowFilters(!showFilters)}
-              className="flex items-center space-x-2 text-gray-600 hover:text-gray-800"
+              className="flex items-center space-x-2 text-gray-600 hover:text-gray-800 text-md"
             >
-              <FilterAltIcon size={16} />
+              <FilterAltIcon sx={{ fontSize: 20 }} />
               <span>Filters</span>
-            </button>
-            <span className="text-sm text-gray-500">{filteredItems.length} items</span>
+            </button> */}
+            <Button>
+              <AddIcon sx={{ fontSize: 20 }}/>
+              Add new item
+            </Button>
           </div>
         </div>
 
         {/* Filter Panel */}
-        {showFilters && (
+        {/* {showFilters && (
           <div className="p-4 bg-gray-50 border-b border-gray-400">
             <div className="space-y-3">
               <div>
@@ -232,52 +237,38 @@ export default function GISPlatformLayout() {
               </div>
             </div>
           </div>
-        )}
+        )} */}
 
         {/* Category Tabs */}
         <div className="flex-shrink-0 border-b border-gray-400 bg-gray-50">
-          <nav className="flex flex-wrap">
-            {categories.map((category) => (
+          <nav className="flex flex-row">
+            {Object.keys(availabilityCategories).map(categoryId => {
+              const categoryParams = availabilityCategories[categoryId];
+
+              return (
               <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`flex items-center space-x-2 px-3 py-3 text-sm font-medium border-b-2 transition-colors ${
-                  selectedCategory === category.id
+                key={categoryId}
+                onClick={() => setSelectedCategory(categoryId)}
+                className={`flex items-center space-x-1 px-2 py-3 text-sm font-medium border-b-2 transition-colors flex-1 cursor-pointer justify-center ${
+                  selectedCategory === categoryId
                     ? 'border-blue-500 text-blue-600 bg-white'
                     : 'border-transparent text-gray-600 hover:text-gray-800 hover:border-gray-300'
                 }`}
               >
-                <category.icon size={16} />
-                <span>{category.label}</span>
+                <categoryParams.icon sx={{ fontSize: 16 }} />
+                <span>{categoryParams.label}</span>
               </button>
-            ))}
+            )})}
           </nav>
-        </div>
-
-        {/* Category Summary */}
-        <div className="p-4 bg-blue-50 border-b border-gray-400">
-          <div className="text-sm">
-            <div className="font-medium text-gray-900 mb-2">
-              Viewing: {categories.find(c => c.id === selectedCategory)?.label || 'All Items'}
-            </div>
-            <div className="grid grid-cols-2 gap-4 text-xs">
-              {categories.slice(1).map((category) => {
-                const count = allItems.filter(item => item.category === category.id).length;
-                return (
-                  <div key={category.id} className="flex items-center space-x-1">
-                    <category.icon size={12} />
-                    <span>{count} {category.label}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
         </div>
 
         {/* Items List */}
         <div className="flex-1 overflow-y-auto">
           <div className="divide-y">
-            {filteredItems.map((item) => (
+            {filteredItems.map((item) => {
+              const categoryParams = availabilityCategories[item.category]
+
+              return (
               <div
                 key={item.id}
                 onClick={() => setSelectedItem(item)}
@@ -287,7 +278,7 @@ export default function GISPlatformLayout() {
               >
                 <div className="flex items-start space-x-3">
                   <div className="flex-shrink-0 mt-0.5">
-                    {getItemIcon(item.category, 18)}
+                    <categoryParams.icon size={16} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between mb-1">
@@ -337,7 +328,7 @@ export default function GISPlatformLayout() {
                   </div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         </div>
       </div>
@@ -346,45 +337,8 @@ export default function GISPlatformLayout() {
       <div className="flex-1 flex flex-col">
         {/* Map Container */}
         <div className="flex-1 relative bg-gray-200">
-          <MapView />
-          
-          {/* Map Controls */}
-          <div className="absolute top-4 left-4 bg-white rounded-lg shadow-md p-2">
-            <div className="space-y-2">
-              <button className="block w-full text-left px-3 py-2 text-sm hover:bg-gray-100 rounded">
-                Fit All Items
-              </button>
-              <button className="block w-full text-left px-3 py-2 text-sm hover:bg-gray-100 rounded">
-                Toggle Layers
-              </button>
-              <button className="block w-full text-left px-3 py-2 text-sm hover:bg-gray-100 rounded">
-                Satellite View
-              </button>
-            </div>
-          </div>
+          {/* <MapView /> */}
 
-          {/* Improved Legend */}
-          <div className="absolute bottom-4 left-4 bg-white rounded-lg shadow-md p-3">
-            <h4 className="font-medium text-gray-900 mb-3">Map Legend</h4>
-            <div className="space-y-2">
-              <div className="flex items-center space-x-2">
-                <ApartmentIcon size={16} className="text-blue-600" />
-                <span className="text-sm text-gray-700">Project Sites</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <LayersIcon size={16} className="text-orange-600" />
-                <span className="text-sm text-gray-700">Borehole Locations</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <DescriptionIcon size={16} className="text-green-600" />
-                <span className="text-sm text-gray-700">Document Locations</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <ArchitectureIcon size={16} className="text-purple-600" />
-                <span className="text-sm text-gray-700">Drawing Coverage</span>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Bottom Panel - Item Details */}
