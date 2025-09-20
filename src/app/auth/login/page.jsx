@@ -10,7 +10,6 @@ import LockIcon from '@mui/icons-material/Lock';
 import SlideAlert from "@/components/SlideAlert.jsx";
 import { useRouter } from 'next/navigation'
 import { CircularProgress } from "@mui/material";
-import { red } from "@mui/material/colors";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -41,7 +40,7 @@ export default function LoginPage() {
       body: JSON.stringify({ email, password }),
     });
 
-    // If server-side login fails, login to client-side as well
+    // If server-side login succeeds, login to client-side as well
     let clientResponse;
     if (serverResponse.ok) {
         // Client-side login
@@ -49,6 +48,9 @@ export default function LoginPage() {
     }
 
     const serverResult = await serverResponse.json();
+
+    // Upload any locally stored information to the database
+    
 
     setLoading(false);
 
