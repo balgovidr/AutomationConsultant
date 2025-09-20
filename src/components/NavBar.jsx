@@ -2,11 +2,25 @@
 
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { navigationLinks } from '@/constants/navBar';
 
 export default function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const navbarRef = useRef(null);
+
+    useEffect(() => {
+        // Get the DOM element from the ref
+        const navbarElement = navbarRef.current;
+        
+        if (navbarElement) {
+            // Get the rendered height of the element
+            const navbarHeight = navbarElement.offsetHeight;
+            
+            // Set the CSS variable on the document's root element
+            document.documentElement.style.setProperty('--navbar-height', `${navbarHeight}px`);
+        }
+    }, []);
 
     // Create a click listener that closes the menu if clicked outside
     useEffect(() => {
@@ -25,7 +39,7 @@ export default function NavBar() {
 
     return (
         <div>
-            <nav className="flex flex-row bg-gray-50 m-5 px-6 py-3.5 rounded-4xl text-blue-900 justify-between">
+            <nav ref={navbarRef} className="flex flex-row bg-gray-100 m-5 px-6 py-3.5 rounded-4xl text-blue-900 justify-between">
                 <a href="https://constructdigitally.com" target="_self" rel="home" aria-current="page">
                     <h6 className="text-md md:text-lg font-medium font-sans">Construct Digitally</h6>
                 </a>
