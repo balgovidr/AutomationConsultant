@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -20,6 +20,10 @@ import ItemsList from '@/components/geospatial/ItemsList';
 import { availabilityCategories, defaultLayer } from '@/constants/geospatial';
 import { getCategoryBadge } from '@/utils/geospatial';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import { Add } from '@mui/icons-material';
+import dynamic from "next/dynamic"
+
+const DynamicMap = dynamic(() => import("@/components/geospatial/MapView"), { ssr:false })
 
 export default function GISPlatformLayout() {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -33,6 +37,10 @@ export default function GISPlatformLayout() {
   });
   const [allItems, setAllItems] = useLocalStorage('geospatialItems', {});
   const [filteredItems, setFilteredItems] = useState({});
+  const [placing, setPlacing] = useState(false);
+  const [pickedLocation, setPickedLocation] = useState([]);
+  const [showItemForm, setShowItemForm] = useState(false);
+  const [layerDefinitions, setLayerDefinitions] = useState(defaultLayer);
 
   // Sample data with clear categorization
   // const allItems = [
@@ -157,6 +165,12 @@ export default function GISPlatformLayout() {
     setFilteredItems(filteredItemsByLayer);
   }, [layerVisibility, allItems]);
 
+  useEffect(() => {
+    if (pickedLocation.length === 2) {
+      setShowItemForm(true);
+    }
+  }, [pickedLocation]);
+
   const getItemIcon = (category, size = 20) => {
     switch(category) {
       case 'project': return <ApartmentIcon size={size} className="text-blue-600" />;
@@ -191,7 +205,7 @@ export default function GISPlatformLayout() {
               <FilterAltIcon sx={{ fontSize: 20 }} />
               <span>Filters</span>
             </button> */}
-            <Button>
+            <Button onClick={() => setPlacing(true)} >
               <AddIcon sx={{ fontSize: 20 }}/>
               Add new item
             </Button>
@@ -259,7 +273,10 @@ export default function GISPlatformLayout() {
       <div className="flex-1 flex flex-col">
         {/* Map Container */}
         <div className="flex-1 relative bg-gray-200">
-          <MapView />
+          <DynamicMap placing={placing} pickedLocation={pickedLocation} setPickedLocation={setPickedLocation} />
+          {showItemForm && (
+            <AddNewItemForm layerDefinitions={layerDefinitions} setShowItemForm={setShowItemForm} />
+          )}
 
         </div>
 

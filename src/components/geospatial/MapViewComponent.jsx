@@ -16,14 +16,14 @@ function ClickHandler({ placing, setPlacing, setPickedLocation }) {
   return null;
 }
 
-// Fix Leaflet’s default marker icon issue in Next.js
+// Fix Leaflet's default marker icon issue in Next.js
 const DefaultIcon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 L.Marker.prototype.options.icon = DefaultIcon;
 
-export default function MapView({placing, setPlacing, pickedLocation, setPickedLocation}) {
+export default function MapViewComponent({placing, setPlacing, pickedLocation, setPickedLocation}) {
   const position = [51.505, -0.09]; // London
 
   return (
