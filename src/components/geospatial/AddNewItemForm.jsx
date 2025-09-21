@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 
-export default function AddNewItemForm({layerDefinitions, setShowItemForm}) {
+export default function AddNewItemForm({layerDefinitions, setShowItemForm, allItems, setAllItems, pickedLocation}) {
 	const [selectedLayer, setSelectedLayer] = useState('');
 	const [formData, setFormData] = useState({});
 	const [errors, setErrors] = useState({});
@@ -68,11 +68,22 @@ export default function AddNewItemForm({layerDefinitions, setShowItemForm}) {
 			return;
 		}
 
-		// Here you would submit the form data to your backend
-		console.log('Submitting form data:', {
-			layerId: selectedLayer,
-			data: formData
-		});
+		// Create new item object
+		if (!currentLayer) {
+			alert('Please select a layer before submitting.');
+			return;
+		}
+		
+		const newPoint = {geometry: pickedLocation, attributes: {...formData, created_at: new Date().toISOString()}}
+
+		let newItems = allItems;
+		if (newItems[selectedLayer]) {
+			newItems[selectedLayer] = [...newItems[selectedLayer], newPoint]
+		} else {
+			newItems[selectedLayer] = [newPoint]
+		}
+
+		setAllItems(newItems);
 		
 		// Reset form and close
 		setFormData({});
@@ -226,7 +237,7 @@ export default function AddNewItemForm({layerDefinitions, setShowItemForm}) {
 			{/* Form */}
 			{/* Form Content */}
 			<div className="flex-1 overflow-y-auto p-6 min-h-0">
-			{/* Layer Selection */}
+				{/* Layer Selection */}
 				<div className="mb-6">
 					<label className="block text-sm font-medium text-gray-700 mb-1">
 						Select Layer <span className="text-red-500">*</span>

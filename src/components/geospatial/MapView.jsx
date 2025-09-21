@@ -11,7 +11,7 @@ export default function MapView({placing, setPlacing, pickedLocation, setPickedL
     useMapEvents({
       click(e) {
         if (placing) {
-          setPickedLocation(e?.latlng?.lat, e?.latlng?.lng);
+          setPickedLocation([e?.latlng?.lat, e?.latlng?.lng]);
           setPlacing(false);
           setShowItemForm(true);
         }

@@ -204,7 +204,7 @@ export default function GISPlatformLayout() {
               <FilterAltIcon sx={{ fontSize: 20 }} />
               <span>Filters</span>
             </button> */}
-            <Button onClick={() => setShowItemForm(true)} >
+            <Button onClick={() => setPlacing(true)} >
               <AddIcon sx={{ fontSize: 20 }}/>
               Add new item
             </Button>
@@ -364,7 +364,7 @@ export default function GISPlatformLayout() {
 
       {showItemForm && (
         <Modal open={showItemForm} onClose={() => {setShowItemForm(false); setPickedLocation([])}}>
-          <AddNewItemForm layerDefinitions={layerDefinitions} setShowItemForm={setShowItemForm} />
+          <AddNewItemForm layerDefinitions={layerDefinitions} setShowItemForm={setShowItemForm} allItems={allItems} setAllItems={setAllItems} pickedLocation={pickedLocation} />
         </Modal>
       )}
     </div>

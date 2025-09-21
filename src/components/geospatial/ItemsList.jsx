@@ -29,7 +29,7 @@ export default function ItemsList({filteredItems, selectedItem, setSelectedItem,
                 </AccordionSummary>
                 <AccordionDetails>
                     {filteredItems[layer.id] && filteredItems[layer.id].map((item) => {
-                        const categoryParams = availabilityCategories[item.category]
+                        const categoryParams = availabilityCategories[item.availability] || { label: 'Unknown', icon: PersonIcon };
 
                         return (
                         <div
