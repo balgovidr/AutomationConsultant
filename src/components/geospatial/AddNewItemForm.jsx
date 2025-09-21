@@ -214,81 +214,79 @@ export default function AddNewItemForm({layerDefinitions, setShowItemForm}) {
 	};
 
 	return (
-		<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div className="bg-white rounded-lg shadow-xl w-full max-w-md h-[600px] flex flex-col">
-				{/* Header */}
-				<div className="flex items-center justify-between p-6 border-b">
-					<h2 className="text-xl font-semibold text-gray-900">Add Location Data</h2>
-					<button onClick={() => setShowItemForm(false)} className="text-gray-400 hover:text-gray-600">
-						<CloseIcon sx={{ fontSize: 24 }} />
-					</button>
+		<div className="bg-white max-w-md h-[600px] flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full">
+			{/* Header */}
+			<div className="flex items-center justify-between p-6 border-b">
+				<h2 className="text-xl font-semibold text-gray-900">Add Location Data</h2>
+				<button onClick={() => setShowItemForm(false)} className="text-gray-400 hover:text-gray-600">
+					<CloseIcon sx={{ fontSize: 24 }} />
+				</button>
+			</div>
+
+			{/* Form */}
+			{/* Form Content */}
+			<div className="flex-1 overflow-y-auto p-6 min-h-0">
+			{/* Layer Selection */}
+				<div className="mb-6">
+					<label className="block text-sm font-medium text-gray-700 mb-1">
+						Select Layer <span className="text-red-500">*</span>
+					</label>
+					<select
+						value={selectedLayer}
+						onChange={(e) => handleLayerChange(e.target.value)}
+						className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+						required
+					>
+					<option value="">Choose a layer...</option>
+						{layerDefinitions.map(layer => (
+							<option key={layer.id} value={layer.id}>
+								{layer.name}
+							</option>
+						))}
+					</select>
 				</div>
 
-				{/* Form */}
-				{/* Form Content */}
-				<div className="flex-1 overflow-y-auto p-6 min-h-0">
-				{/* Layer Selection */}
-					<div className="mb-6">
-						<label className="block text-sm font-medium text-gray-700 mb-1">
-							Select Layer <span className="text-red-500">*</span>
-						</label>
-						<select
-							value={selectedLayer}
-							onChange={(e) => handleLayerChange(e.target.value)}
-							className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-							required
-						>
-						<option value="">Choose a layer...</option>
-							{layerDefinitions.map(layer => (
-								<option key={layer.id} value={layer.id}>
-									{layer.name}
-								</option>
-							))}
-						</select>
+			{/* Dynamic Form Fields */}
+			{currentLayer && (
+				<div className="space-y-4">
+					<div className="border-t pt-4">
+						<h3 className="text-lg font-medium text-gray-900 mb-4">
+							{currentLayer.name} Details
+						</h3>
+						{currentLayer.attributes.map(renderFormField)}
 					</div>
-
-				{/* Dynamic Form Fields */}
-				{currentLayer && (
-					<div className="space-y-4">
-						<div className="border-t pt-4">
-							<h3 className="text-lg font-medium text-gray-900 mb-4">
-								{currentLayer.name} Details
-							</h3>
-							{currentLayer.attributes.map(renderFormField)}
-						</div>
-					</div>
-				)}
 				</div>
+			)}
+			</div>
 
-				{/* Form Actions */}
-				<div className="p-6 border-t bg-gray-50">
-					{currentLayer ? (
-						<div className="flex gap-3">
-							<button
-								type="button"
-								onClick={() => setShowItemForm(false)}
-								className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
-							>
-								Cancel
-							</button>
-							<button
-								type="button"
-								onClick={handleSubmit}
-								className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
-							>
-								Save Data
-							</button>
-						</div>
-					) : (
+			{/* Form Actions */}
+			<div className="p-6 border-t bg-gray-50">
+				{currentLayer ? (
+					<div className="flex gap-3">
 						<button
 							type="button"
 							onClick={() => setShowItemForm(false)}
-							className="w-full px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+							className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
 						>
-							Close
+							Cancel
 						</button>
-					)}
-				</div>
+						<button
+							type="button"
+							onClick={handleSubmit}
+							className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
+						>
+							Save Data
+						</button>
+					</div>
+				) : (
+					<button
+						type="button"
+						onClick={() => setShowItemForm(false)}
+						className="w-full px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+					>
+						Close
+					</button>
+				)}
 			</div>
 		</div>
 	);

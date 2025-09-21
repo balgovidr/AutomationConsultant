@@ -1,3 +1,5 @@
+'use client';
+
 export const getCategoryBadge = (category) => {
     const config = {
       project: { bg: 'bg-blue-100', text: 'text-blue-800', label: 'Project' },

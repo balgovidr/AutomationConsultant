@@ -11,8 +11,6 @@ import DownloadIcon from '@mui/icons-material/Download';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import "leaflet/dist/leaflet.css";
-import MapView from '@/components/geospatial/MapView';
 import Button from '@/components/Button';
 import AddIcon from '@mui/icons-material/AddOutlined';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
@@ -21,9 +19,10 @@ import { availabilityCategories, defaultLayer } from '@/constants/geospatial';
 import { getCategoryBadge } from '@/utils/geospatial';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { Add } from '@mui/icons-material';
-import dynamic from "next/dynamic"
+import MapView from '@/components/geospatial/MapView';
+import AddNewItemForm from '@/components/geospatial/AddNewItemForm';
+import { Modal } from '@mui/material';
 
-const DynamicMap = dynamic(() => import("@/components/geospatial/MapView"), { ssr:false })
 
 export default function GISPlatformLayout() {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -205,10 +204,11 @@ export default function GISPlatformLayout() {
               <FilterAltIcon sx={{ fontSize: 20 }} />
               <span>Filters</span>
             </button> */}
-            <Button onClick={() => setPlacing(true)} >
+            <Button onClick={() => setShowItemForm(true)} >
               <AddIcon sx={{ fontSize: 20 }}/>
               Add new item
             </Button>
+            {placing && <span>Click a point on the map</span>}
           </div>
         </div>
 
@@ -272,12 +272,8 @@ export default function GISPlatformLayout() {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col">
         {/* Map Container */}
-        <div className="flex-1 relative bg-gray-200">
-          <DynamicMap placing={placing} pickedLocation={pickedLocation} setPickedLocation={setPickedLocation} />
-          {showItemForm && (
-            <AddNewItemForm layerDefinitions={layerDefinitions} setShowItemForm={setShowItemForm} />
-          )}
-
+        <div className={"flex-1 relative bg-gray-200 " + (placing ? 'cursor-crosshair' : '')}>
+          <MapView placing={placing} setPlacing={setPlacing} pickedLocation={pickedLocation} setPickedLocation={setPickedLocation} setShowItemForm={setShowItemForm} />
         </div>
 
         {/* Bottom Panel - Item Details */}
@@ -365,6 +361,12 @@ export default function GISPlatformLayout() {
           </div>
         )}
       </div>
+
+      {showItemForm && (
+        <Modal open={showItemForm} onClose={() => {setShowItemForm(false); setPickedLocation([])}}>
+          <AddNewItemForm layerDefinitions={layerDefinitions} setShowItemForm={setShowItemForm} />
+        </Modal>
+      )}
     </div>
   );
 }

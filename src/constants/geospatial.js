@@ -64,8 +64,8 @@ const boreholeLayerDef = {
         },
         {
             id: "log",
-            name: "Borehole Log (PDF)",
-            type: "file",
+            name: "Borehole log location",
+            type: "string",
             required: true
         }
     ]
