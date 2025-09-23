@@ -33,12 +33,12 @@ const boreholeLayerDef = {
         {
             id: "availability",
             name: "Availability",
-            type: "string",
+            type: "enum",
             options: Object.keys(availabilityCategories),
             required: true,
         },
         {
-            id: "borehole_ref",
+            id: "boreholeRef",
             name: "Borehole Reference",
             type: "string",
             required: false
@@ -63,7 +63,7 @@ const boreholeLayerDef = {
             required: false
         },
         {
-            id: "drilling_method",
+            id: "drillingMethod",
             name: "Drilling Method",
             type: "enum",
             options: ["Cable Percussion", "Rotary", "Window Sampler", "Other"],
@@ -71,9 +71,10 @@ const boreholeLayerDef = {
         },
         {
             id: "log",
-            name: "Borehole log location",
+            name: "Borehole log file URL",
             type: "string",
-            required: true
+            required: true,
+            placeholder: "C:/Users/You/Documents/log.pdf or https://example.com/log.pdf"
         }
     ]
 };

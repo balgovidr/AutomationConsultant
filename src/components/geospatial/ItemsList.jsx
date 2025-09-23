@@ -29,66 +29,56 @@ export default function ItemsList({filteredItems, selectedItem, setSelectedItem,
                 </AccordionSummary>
                 <AccordionDetails>
                     {filteredItems[layer.id] && filteredItems[layer.id].map((item) => {
-                        const categoryParams = availabilityCategories[item.availability] || { label: 'Unknown', icon: PersonIcon };
+                        const categoryParams = availabilityCategories[item.attributes.availability] || { label: 'Unknown', icon: PersonIcon };
 
                         return (
                         <div
-                            key={item.id}
-                            onClick={() => setSelectedItem(item)}
-                            className={`p-4 cursor-pointer hover:bg-gray-50 transition-colors ${
-                            selectedItem?.id === item.id ? 'bg-blue-50 border-r-2 border-blue-500' : ''
-                            }`}
+                            key={layer.id + item.attributes.id}
+                            onClick={() => setSelectedItem({layer: layer.id, id: item.attributes.id})}
+                            className={`p-4 cursor-pointer hover:bg-gray-50 transition-colors ${(selectedItem?.id === item.attributes.id && selectedItem?.layer === layer.id) ? 'bg-blue-50 border-r-2 border-blue-500' : ''}`}
                         >
                             <div className="flex items-start space-x-3">
-                            <div className="flex-shrink-0 mt-0.5">
-                                <categoryParams.icon size={16} />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <div className="flex items-start justify-between mb-1">
-                                <h3 className="font-medium text-gray-900 truncate">{item.name}</h3>
-                                {getCategoryBadge(item.category)}
+                                <div className="flex-shrink-0 mt-0.5">
+                                    <categoryParams.icon size={16} />
                                 </div>
-                                
-                                <p className="text-sm text-gray-600 mb-2 line-clamp-2">{item.description}</p>
-                                
-                                <div className="space-y-1">
-                                <div className="flex items-center text-xs text-gray-500">
-                                    <PlaceIcon size={12} className="mr-1 flex-shrink-0" />
-                                    <span className="truncate">{item.location}</span>
-                                </div>
-                                <div className="flex items-center text-xs text-gray-500">
-                                    <CalendarTodayIcon sx={{ fontSize: 12 }} className="mr-1 flex-shrink-0" />
-                                    <span>{item.date}</span>
-                                </div>
-                                <div className="flex items-center text-xs text-gray-500">
-                                    <PersonIcon sx={{ fontSize: 12 }} className="mr-1 flex-shrink-0" />
-                                    <span>{item.engineer}</span>
-                                </div>
-                                
-                                {/* Category-specific info */}
-                                {item.category === 'project' && item.itemCount && (
-                                    <div className="text-xs text-blue-600">
-                                    {item.itemCount} associated items
+                                <div className="flex-1 min-w-0">
+                                    {item.attributes.boreholeRef && 
+                                    <div className="flex items-start justify-between mb-1">
+                                        <h3 className="font-medium text-gray-900 truncate">{item.attributes.boreholeRef}</h3>
+                                        {getCategoryBadge(layer.id)}
+                                    </div>}
+                                    
+                                    {item.attributes.description && <p className="text-sm text-gray-600 mb-2 line-clamp-2">{item.attributes.description}</p>}
+                                    
+                                    <div className="space-y-1">
+                                        {item.attributes.date && <div className="flex items-center text-xs text-gray-500">
+                                            <CalendarTodayIcon sx={{ fontSize: 12 }} className="mr-1 flex-shrink-0" />
+                                            <span>{item.attributes.date}</span>
+                                        </div>}
+                                        {item.attributes.createdBy && <div className="flex items-center text-xs text-gray-500">
+                                            <PersonIcon sx={{ fontSize: 12 }} className="mr-1 flex-shrink-0" />
+                                            <span>{item.attributes.createdBy}</span>
+                                        </div>}
+                                        
+                                        {/* Category-specific info */}
+                                        {item.attributes.category === 'project' && item.itemCount && (
+                                            <div className="text-xs text-blue-600">
+                                            {item.attributes.itemCount} associated items
+                                            </div>
+                                        )}
+                                        {(item.attributes.category === 'document' || item.attributes.category === 'drawing') && (
+                                            <div className="flex items-center justify-between text-xs text-gray-500">
+                                            <span>{item.attributes.fileType} • {item.attributes.size}</span>
+                                            {item.attributes.scale && <span>Scale: {item.attributes.scale}</span>}
+                                            </div>
+                                        )}
+                                        {item.attributes.category === 'borehole' && item.attributes.depth && (
+                                            <div className="text-xs text-orange-600">
+                                            Depth: {item.attributes.depth}
+                                            </div>
+                                        )}
                                     </div>
-                                )}
-                                {(item.category === 'document' || item.category === 'drawing') && (
-                                    <div className="flex items-center justify-between text-xs text-gray-500">
-                                    <span>{item.fileType} • {item.size}</span>
-                                    {item.scale && <span>Scale: {item.scale}</span>}
-                                    </div>
-                                )}
-                                {item.category === 'borehole' && (
-                                    <div className="text-xs text-orange-600">
-                                    Depth: {item.depth}
-                                    </div>
-                                )}
-                                {item.projectRef && (
-                                    <div className="text-xs text-gray-500">
-                                    Project: {item.projectRef}
-                                    </div>
-                                )}
                                 </div>
-                            </div>
                             </div>
                         </div>
                         )})}

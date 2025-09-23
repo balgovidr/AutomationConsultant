@@ -4,6 +4,7 @@ import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import { capitaliseFirstLetter } from '@/utils/stringFunctions';
 
 export default function AddNewItemForm({layerDefinitions, setShowItemForm, allItems, setAllItems, pickedLocation}) {
 	const [selectedLayer, setSelectedLayer] = useState('');
@@ -74,7 +75,8 @@ export default function AddNewItemForm({layerDefinitions, setShowItemForm, allIt
 			return;
 		}
 		
-		const newPoint = {geometry: pickedLocation, attributes: {...formData, created_at: new Date().toISOString()}}
+		const newId = allItems[currentLayer.id] ? allItems[currentLayer.id].length + 1 : 1;
+		const newPoint = {geometry: {latitude: pickedLocation[0], longitude: pickedLocation[1]}, attributes: {...formData, creationDate: new Date().toISOString(), id: newId}}
 
 		let newItems = allItems;
 		if (newItems[selectedLayer]) {
@@ -113,20 +115,20 @@ export default function AddNewItemForm({layerDefinitions, setShowItemForm, allIt
 		switch (attribute.type) {
 		case 'string':
 			return (
-			<div key={attribute.id} className="mb-4">
-				<label className="block text-sm font-medium text-gray-700 mb-1">
-				{attribute.name}
-				{attribute.required && <span className="text-red-500 ml-1">*</span>}
-				</label>
-				<input
-				type="text"
-				value={formData[attribute.id] || ''}
-				onChange={(e) => handleInputChange(attribute.id, e.target.value)}
-				className={baseClasses}
-				placeholder={`Enter ${attribute.name.toLowerCase()}`}
-				/>
-				{hasError && <p className="text-red-500 text-xs mt-1">{hasError}</p>}
-			</div>
+				<div key={attribute.id} className="mb-4">
+					<label className="block text-sm font-medium text-gray-700 mb-1">
+						{attribute.name}
+						{attribute.required && <span className="text-red-500 ml-1">*</span>}
+					</label>
+					<input
+						type="text"
+						value={formData[attribute.id] || ''}
+						onChange={(e) => handleInputChange(attribute.id, e.target.value)}
+						className={baseClasses}
+						placeholder={attribute.placeholder && attribute.placeholder}
+					/>
+					{hasError && <p className="text-red-500 text-xs mt-1">{hasError}</p>}
+				</div>
 			);
 
 		case 'number':
@@ -141,7 +143,7 @@ export default function AddNewItemForm({layerDefinitions, setShowItemForm, allIt
 				value={formData[attribute.id] || ''}
 				onChange={(e) => handleInputChange(attribute.id, e.target.value)}
 				className={baseClasses}
-				placeholder={`Enter ${attribute.name.toLowerCase()}`}
+				placeholder={attribute.placeholder && attribute.placeholder}
 				min={attribute.min}
 				/>
 				{hasError && <p className="text-red-500 text-xs mt-1">{hasError}</p>}
@@ -150,43 +152,43 @@ export default function AddNewItemForm({layerDefinitions, setShowItemForm, allIt
 
 		case 'date':
 			return (
-			<div key={attribute.id} className="mb-4">
-				<label className="block text-sm font-medium text-gray-700 mb-1">
-				{attribute.name}
-				{attribute.required && <span className="text-red-500 ml-1">*</span>}
-				</label>
-				<div className="relative">
-				<input
-					type="date"
-					value={formData[attribute.id] || ''}
-					onChange={(e) => handleInputChange(attribute.id, e.target.value)}
-					className={`${baseClasses} pr-10`}
-				/>
-				<CalendarTodayIcon sx={{ fontSize: 16 }} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+				<div key={attribute.id} className="mb-4">
+					<label className="block text-sm font-medium text-gray-700 mb-1">
+						{attribute.name}
+						{attribute.required && <span className="text-red-500 ml-1">*</span>}
+					</label>
+					<div className="relative">
+						<input
+							type="date"
+							value={formData[attribute.id] || ''}
+							onChange={(e) => handleInputChange(attribute.id, e.target.value)}
+							className={`${baseClasses} pr-10`}
+						/>
+						<CalendarTodayIcon sx={{ fontSize: 16 }} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+					</div>
+					{hasError && <p className="text-red-500 text-xs mt-1">{hasError}</p>}
 				</div>
-				{hasError && <p className="text-red-500 text-xs mt-1">{hasError}</p>}
-			</div>
 			);
 
 		case 'enum':
 			return (
-			<div key={attribute.id} className="mb-4">
-				<label className="block text-sm font-medium text-gray-700 mb-1">
-				{attribute.name}
-				{attribute.required && <span className="text-red-500 ml-1">*</span>}
-				</label>
-				<select
-				value={formData[attribute.id] || ''}
-				onChange={(e) => handleInputChange(attribute.id, e.target.value)}
-				className={baseClasses}
-				>
-				<option value="">Select {attribute.name.toLowerCase()}</option>
-				{attribute.options.map(option => (
-					<option key={option} value={option}>{option}</option>
-				))}
-				</select>
-				{hasError && <p className="text-red-500 text-xs mt-1">{hasError}</p>}
-			</div>
+				<div key={attribute.id} className="mb-4">
+					<label className="block text-sm font-medium text-gray-700 mb-1">
+						{attribute.name}
+						{attribute.required && <span className="text-red-500 ml-1">*</span>}
+					</label>
+					<select
+						value={formData[attribute.id] || ''}
+						onChange={(e) => handleInputChange(attribute.id, e.target.value)}
+						className={baseClasses}
+					>
+						<option value="">Select {attribute.name.toLowerCase()}</option>
+						{attribute.options.map(option => (
+							<option key={option} value={option}>{capitaliseFirstLetter(option)}</option>
+						))}
+					</select>
+					{hasError && <p className="text-red-500 text-xs mt-1">{hasError}</p>}
+				</div>
 			);
 
 		case 'file':
@@ -277,14 +279,14 @@ export default function AddNewItemForm({layerDefinitions, setShowItemForm, allIt
 						<button
 							type="button"
 							onClick={() => setShowItemForm(false)}
-							className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+							className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors cursor-pointer"
 						>
 							Cancel
 						</button>
 						<button
 							type="button"
 							onClick={handleSubmit}
-							className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
+							className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors cursor-pointer"
 						>
 							Save Data
 						</button>
@@ -293,7 +295,7 @@ export default function AddNewItemForm({layerDefinitions, setShowItemForm, allIt
 					<button
 						type="button"
 						onClick={() => setShowItemForm(false)}
-						className="w-full px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+						className="w-full px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors cursor-pointer"
 					>
 						Close
 					</button>
